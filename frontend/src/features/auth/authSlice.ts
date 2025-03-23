@@ -1,0 +1,1 @@
+# Placeholder content for src/features/auth/authSlice.ts
