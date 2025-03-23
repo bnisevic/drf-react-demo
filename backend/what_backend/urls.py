@@ -6,12 +6,12 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="Snippets API",
+      title="DRF React Demo Backend API",
       default_version='v1',
-      description="Test description",
-      terms_of_service="https://www.google.com/policies/terms/",
-      contact=openapi.Contact(email="contact@snippets.local"),
-      license=openapi.License(name="BSD License"),
+      description="Demo backend API for the test assessment.",
+      terms_of_service="https://what.digital/privacy-policy-terms-of-use/",
+      contact=openapi.Contact(email="bojan@wolfinne.com"),
+      license=openapi.License(name="The GNU General Public License v3.0"),
    ),
    public=True,
    permission_classes=(permissions.AllowAny,),
