@@ -1,0 +1,22 @@
+services:
+  backend:
+    build:
+      dockerfile: Dockerfile.dev
+    command: >
+      sh -c "set -e && python manage.py migrate &&
+             python manage.py loaddata users.json &&
+             python manage.py loaddata products.json &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    build:
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    stdin_open: true
+    tty: true

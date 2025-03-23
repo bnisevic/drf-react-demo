@@ -1,1 +1,1 @@
-# Placeholder content for src/components/ProductTable.tsx
+// Placeholder content for src/components/ProductTable.tsx

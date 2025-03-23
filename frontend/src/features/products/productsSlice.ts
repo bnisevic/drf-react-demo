@@ -1,1 +1,1 @@
-# Placeholder content for src/features/products/productsSlice.ts
+// Placeholder content for src/features/products/productsSlice.ts

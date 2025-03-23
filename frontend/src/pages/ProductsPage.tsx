@@ -1,1 +1,1 @@
-# Placeholder content for src/pages/ProductsPage.tsx
+// Placeholder content for src/pages/ProductsPage.tsx

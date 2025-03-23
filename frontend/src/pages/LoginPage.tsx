@@ -1,1 +1,1 @@
-# Placeholder content for src/pages/LoginPage.tsx
+// Placeholder content for src/pages/LoginPage.tsx

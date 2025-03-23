@@ -1,1 +1,12 @@
-# Placeholder content for api/fixtures/products.json
+[
+  {"model": "api.product", "pk": 1, "fields": {"name": "Apple", "description": "Fresh Apple", "price": "1.20", "stock": 100}},
+  {"model": "api.product", "pk": 2, "fields": {"name": "Banana", "description": "Yellow Banana", "price": "0.90", "stock": 80}},
+  {"model": "api.product", "pk": 3, "fields": {"name": "Orange", "description": "Sweet Orange", "price": "1.00", "stock": 90}},
+  {"model": "api.product", "pk": 4, "fields": {"name": "Mango", "description": "Tropical Mango", "price": "1.80", "stock": 60}},
+  {"model": "api.product", "pk": 5, "fields": {"name": "Pineapple", "description": "Juicy Pineapple", "price": "2.50", "stock": 70}},
+  {"model": "api.product", "pk": 6, "fields": {"name": "Grapes", "description": "Green Grapes", "price": "2.00", "stock": 120}},
+  {"model": "api.product", "pk": 7, "fields": {"name": "Strawberry", "description": "Red Strawberry", "price": "2.20", "stock": 50}},
+  {"model": "api.product", "pk": 8, "fields": {"name": "Blueberry", "description": "Blueberry box", "price": "3.00", "stock": 30}},
+  {"model": "api.product", "pk": 9, "fields": {"name": "Kiwi", "description": "Kiwi from NZ", "price": "1.50", "stock": 40}},
+  {"model": "api.product", "pk": 10, "fields": {"name": "Watermelon", "description": "Large watermelon", "price": "4.00", "stock": 20}}
+]

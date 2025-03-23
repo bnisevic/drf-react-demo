@@ -1,1 +1,1 @@
-# Placeholder content for src/store/index.ts
+// Placeholder content for src/store/index.ts

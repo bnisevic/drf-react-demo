@@ -1,1 +1,44 @@
-# Placeholder content for docker-compose.yml
+version: '3.9'
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: what_db
+      POSTGRES_USER: what_user
+      POSTGRES_PASSWORD: what_pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - what_net
+
+  backend:
+    build:
+      context: ./backend
+    depends_on:
+      - db
+    environment:
+      DB_NAME: what_db
+      DB_USER: what_user
+      DB_PASSWORD: what_pass
+      DB_HOST: db
+    networks:
+      - what_net
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+    depends_on:
+      - backend
+    networks:
+      - what_net
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:
+
+networks:
+  what_net:

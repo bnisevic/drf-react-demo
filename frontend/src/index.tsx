@@ -1,1 +1,1 @@
-# Placeholder content for src/index.tsx
+// Placeholder content for src/index.tsx

@@ -1,1 +1,1 @@
-# Placeholder content for src/features/auth/authSlice.ts
+// Placeholder content for src/features/auth/authSlice.ts

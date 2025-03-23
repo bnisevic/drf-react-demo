@@ -1,1 +1,1 @@
-# Placeholder content for src/App.tsx
+// Placeholder content for src/App.tsx
