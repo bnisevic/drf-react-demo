@@ -1,7 +1,9 @@
+coverage
 Django
 djangorestframework
 djangorestframework-simplejwt
 django-cors-headers
 drf-yasg
 gunicorn
+django-environ
 psycopg2-binary

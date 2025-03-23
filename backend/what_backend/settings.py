@@ -1,14 +1,18 @@
 import os
 from pathlib import Path
-from datetime import timedelta
+import environ
+
+
+env = environ.Env()
+environ.Env.read_env()  # reading .env file
 
 # BASE DIR
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY
-SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-secret-key")
-DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
-ALLOWED_HOSTS = ["*"]
+SECRET_KEY = env.str('SECRET_KEY')
+DEBUG = env.bool('DEBUG', default=False)
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 # APPLICATIONS
 INSTALLED_APPS = [
@@ -19,9 +23,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "drf_yasg",
-    "rest_framework",
-    "corsheaders",
-    "api",
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'corsheaders',
+    'api',
 ]
 
 MIDDLEWARE = [
