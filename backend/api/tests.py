@@ -1,4 +1,5 @@
 import unittest
+
 from django.urls import reverse
 from rest_framework.test import APITestCase
 from .models import Product
@@ -22,6 +23,12 @@ class SpecBackendTests(APITestCase):
         self.product = Product.objects.create(
             name="Banana", description="Yellow", price=1.5, stock=50
         )
+        Product.objects.create(
+            name="Apple", description="Red", price=2.5, stock=100
+        )
+        Product.objects.create(
+            name="Orange", description="Orange", price=1.0, stock=30
+        )
 
     def test_user_login_and_info(self):
         """
@@ -34,12 +41,17 @@ class SpecBackendTests(APITestCase):
 
     def test_product_search(self):
         """
-        Test product search
+        Test product search and ordering
         :return:
         """
         res = self.client.get(reverse("product-list"), {"search": "Banana"}, **self.auth_header)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.data[0]["name"], "Banana")
+
+        res = self.client.get(reverse("product-list"), {"ordering": "price"}, **self.auth_header)
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.data[0]["name"], "Orange")
+
 
     def test_product_selection(self):
         """
@@ -61,6 +73,7 @@ class SpecBackendTests(APITestCase):
         self.client.post(reverse("select-product", args=[self.product.pk]), **self.auth_header)
         selected = self.client.get(reverse("selected-products"), **self.auth_header)
         self.assertEqual(len(selected.data), 1)
+        self.assertEqual(selected.data[0]["id"], self.product.id)
 
         # Logout
         res = self.client.post(reverse("knox_logout"), **self.auth_header)
@@ -68,7 +81,8 @@ class SpecBackendTests(APITestCase):
 
         # Check if the session is cleared
         selected = self.client.get(reverse("selected-products"), **self.auth_header)
-        self.assertEqual(len(selected.data), 0)
+        self.assertEqual(selected.status_code, 401)
+        self.assertEqual(selected.json()["detail"], "Invalid token.")
 
 
 class ProductModelTestCase(unittest.TestCase):
