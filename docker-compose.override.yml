@@ -12,6 +12,8 @@ services:
   frontend:
     build:
       dockerfile: Dockerfile.dev
+    depends_on:
+      - backend
     volumes:
       - ./frontend:/app
       - /app/node_modules

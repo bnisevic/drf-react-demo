@@ -30,4 +30,7 @@ This will:
 ### API Documentation available at: http://<host_address:port>/swagger/
 
 ## Running Tests on Backend
+ docker compose run backend coverage run manage.py test
 
+## Creating Superuser
+ docker compose run backend python manage.py createsuperuser

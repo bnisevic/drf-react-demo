@@ -1,22 +1,21 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from './store';
-import Login from './components/Login';
-import ProductTable from './components/ProductTable';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Login from './pages/Login'
+import ProductList from './pages/ProductList'
+import SelectedProducts from './pages/SelectedProducts'
 
-const App: React.FC = () => {
+function App() {
   return (
-    <Provider store={store}>
-      <Router>
+    <BrowserRouter>
+      <div className="container py-4">
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<ProductTable />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/products" element={<ProductList />} />
+          <Route path="/selected" element={<SelectedProducts />} />
         </Routes>
-      </Router>
-    </Provider>
-  );
-};
+      </div>
+    </BrowserRouter>
+  )
+}
 
-export default App;
+export default App

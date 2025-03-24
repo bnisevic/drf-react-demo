@@ -1,7 +1,9 @@
-import os
+import logging
 from pathlib import Path
 import environ
 
+
+_logger = logging.getLogger(__name__)
 
 env = environ.Env()
 environ.Env.read_env()  # reading .env file
@@ -13,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env.str('SECRET_KEY')
 DEBUG = env.bool('DEBUG', default=False)
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
-
+_logger.info(f'ALLOWED_HOSTS={ALLOWED_HOSTS}')
 # CORS & CSRF
 CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=[])
 CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[])
