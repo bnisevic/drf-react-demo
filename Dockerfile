@@ -14,7 +14,7 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 # Copy backend source
 COPY backend/ ./backend/
-COPY backend/example.env ./backend/.env
+COPY backend/what_backend/example.env ./backend/what_backend/.env
 WORKDIR /app/backend
 
 # Export environment variables from .env
