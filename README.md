@@ -25,3 +25,9 @@ This will:
 - Run gunicorn for Django 
 - Build React static assets with npm run build and serve them with npx serve 
 - Avoid mounting your local source code
+
+
+### API Documentation available at: http://<host_address:port>/swagger/
+
+## Running Tests on Backend
+

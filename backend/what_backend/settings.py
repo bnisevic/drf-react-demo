@@ -12,7 +12,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 SECRET_KEY = env.str('SECRET_KEY')
 DEBUG = env.bool('DEBUG', default=False)
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
+
+# CORS & CSRF
+CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS', default=[])
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[])
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = False  # Must be False when credentials are used
+
+# SESSION COOKIE CONFIGURATION
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SECURE = not DEBUG  # True only with HTTPS in production
 
 # APPLICATIONS
 INSTALLED_APPS = [
@@ -24,7 +35,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "drf_yasg",
     'rest_framework',
-    'rest_framework_simplejwt',
+    'rest_framework.authtoken',
+    'knox',
     'corsheaders',
     'api',
 ]
@@ -41,6 +53,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "what_backend.urls"
+WSGI_APPLICATION = "what_backend.wsgi.application"
 
 TEMPLATES = [
     {
@@ -58,17 +71,15 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "what_backend.wsgi.application"
-
 # DATABASE
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("DB_NAME", "what_db"),
-        "USER": os.environ.get("DB_USER", "what_user"),
-        "PASSWORD": os.environ.get("DB_PASSWORD", "what_pass"),
-        "HOST": os.environ.get("DB_HOST", "localhost"),
-        "PORT": os.environ.get("DB_PORT", "5432"),
+        "NAME": env("DB_NAME", default="what_db"),
+        "USER": env("DB_USER", default="what_user"),
+        "PASSWORD": env("DB_PASSWORD", default="what_pass"),
+        "HOST": env("DB_HOST", default="localhost"),
+        "PORT": env("DB_PORT", default="5432"),
     }
 }
 
@@ -105,21 +116,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # REST FRAMEWORK CONFIG
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        'knox.auth.TokenAuthentication',
     ),
     "DEFAULT_PERMISSION_CLASSES": (
         "rest_framework.permissions.IsAuthenticated",
     ),
 }
-
-# JWT CONFIG
-from datetime import timedelta
-
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "AUTH_HEADER_TYPES": ("Bearer",),
-}
-
-# CORS
-CORS_ALLOW_ALL_ORIGINS = True

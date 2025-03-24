@@ -1,9 +1,10 @@
 coverage
 Django
 djangorestframework
-djangorestframework-simplejwt
+django-rest-knox
 django-cors-headers
+django-environ
 drf-yasg
 gunicorn
-django-environ
+ipdb
 psycopg2-binary
