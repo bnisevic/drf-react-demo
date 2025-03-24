@@ -14,12 +14,12 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 # Copy backend source
 COPY backend/ ./backend/
+COPY backend/example.env ./backend/.env
 WORKDIR /app/backend
 
-# Set production environment variable for collectstatic to succeed
-ENV SECRET_KEY="dummy-key"
-ENV DEBUG=False
-ENV ALLOWED_HOSTS="https://drf-react-demo.us.aldryn.io"
+# Export environment variables from .env
+RUN pip install python-dotenv
+RUN python -c "import dotenv; dotenv.load_dotenv(dotenv_path='.env')"
 
 # Collect static files
 RUN python manage.py collectstatic --noinput
