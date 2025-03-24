@@ -1,6 +1,6 @@
 # Dockerfile
 
-# Stage 1 - build backend & collect static
+############### Stage 1: Backend Builder #####################
 FROM python:3.11-slim as backend-builder
 
 WORKDIR /app
@@ -8,32 +8,53 @@ WORKDIR /app
 # Install system dependencies
 RUN apt-get update && apt-get install -y gcc libpq-dev && rm -rf /var/lib/apt/lists/*
 
+# Create and use virtualenv
+ENV VIRTUAL_ENV=/opt/venv
+RUN python -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
 # Install Python requirements
 COPY backend/requirements.txt ./
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Copy backend source
+# Copy backend code
 COPY backend/ ./backend/
-COPY backend/what_backend/example.env ./backend/what_backend/.env
+COPY backend/example.env ./backend/.env
 WORKDIR /app/backend
 
-# Export environment variables from .env
-RUN pip install python-dotenv
-RUN python -c "import dotenv; dotenv.load_dotenv(dotenv_path='.env')"
-
-# Collect static files
+# Collect static
 RUN python manage.py collectstatic --noinput
 
 # Run tests
-RUN coverage run manage.py test && coverage report
+RUN python manage.py manage.py test
 
-# Stage 2 - final image
-FROM python:3.11-slim
+
+############### Stage 2: Frontend Builder #####################
+FROM node:20 as frontend-builder
 
 WORKDIR /app
 
-COPY --from=backend-builder /usr/local /usr/local
+COPY frontend/ ./frontend/
+WORKDIR /app/frontend
+
+RUN npm install && npm run build
+
+
+############### Stage 3: Final Runtime ########################
+FROM python:3.11-slim
+
+# Set environment for virtualenv
+ENV VIRTUAL_ENV=/opt/venv
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+WORKDIR /app
+
+# Copy backend code and venv
+COPY --from=backend-builder /opt/venv /opt/venv
 COPY --from=backend-builder /app/backend /app/backend
+
+# Copy built frontend static files into Django static folder
+COPY --from=frontend-builder /app/frontend/dist /app/backend/static/
 
 WORKDIR /app/backend
 
