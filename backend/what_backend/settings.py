@@ -75,13 +75,9 @@ TEMPLATES = [
 
 # DATABASE
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": env("DB_NAME", default="what_db"),
-        "USER": env("DB_USER", default="what_user"),
-        "PASSWORD": env("DB_PASSWORD", default="what_pass"),
-        "HOST": env("DB_HOST", default="localhost"),
-        "PORT": env("DB_PORT", default="5432"),
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
