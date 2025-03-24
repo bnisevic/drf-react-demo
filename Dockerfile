@@ -23,10 +23,10 @@ COPY backend/what_backend/example.env ./backend/.env
 WORKDIR /app/backend
 
 # Collect static using sourced .env
-RUN set -o allexport && . .env && set +o allexport && python manage.py collectstatic --noinput
+RUN set -o allexport && . /app/backend/.env && set +o allexport && python manage.py collectstatic --noinput
 
 # Run tests using sourced .env
-RUN set -o allexport && . .env && set +o allexport && python manage.py test
+RUN set -o allexport && . /app/backend/.env && set +o allexport && python manage.py test
 
 
 ############### Stage 2: Frontend Builder #####################
