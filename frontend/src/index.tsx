@@ -1,1 +1,15 @@
-// Placeholder content for src/index.tsx
+// Add an empty export statement to make this file a module
+export {};
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import store from './store';
+import App from './App';
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
