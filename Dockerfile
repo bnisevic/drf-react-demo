@@ -17,19 +17,16 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 COPY backend/requirements.txt ./
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-# Install dotenv-cli to load env variables during build
-RUN pip install python-dotenv dotenv-cli
-
 # Copy backend code
 COPY backend/ ./backend/
 COPY backend/what_backend/example.env ./backend/.env
 WORKDIR /app/backend
 
-# Collect static using .env
-RUN dotenv -f .env run python manage.py collectstatic --noinput
+# Collect static using sourced .env
+RUN set -o allexport && . .env && set +o allexport && python manage.py collectstatic --noinput
 
-# Run tests using .env
-RUN dotenv -f .env run python manage.py test
+# Run tests using sourced .env
+RUN set -o allexport && . .env && set +o allexport && python manage.py test
 
 
 ############### Stage 2: Frontend Builder #####################
