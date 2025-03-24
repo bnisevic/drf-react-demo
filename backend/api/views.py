@@ -42,7 +42,10 @@ class CurrentUserView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        return Response({"username": request.user.username})
+        return Response({
+            'username': request.user.username,
+            'email': request.user.email,
+        })
 
 class ProductListView(generics.ListAPIView):
     serializer_class = ProductSerializer

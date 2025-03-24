@@ -11,7 +11,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/products" element={<ProductList />} />
-          <Route path="/selected" element={<SelectedProducts />} />
         </Routes>
       </div>
     </BrowserRouter>
