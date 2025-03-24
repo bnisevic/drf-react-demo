@@ -19,7 +19,7 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 # Copy backend code
 COPY backend/ ./backend/
-COPY backend/example.env ./backend/.env
+COPY backend/what_backend/example.env ./backend/.env
 WORKDIR /app/backend
 
 # Collect static
