@@ -4,7 +4,6 @@ services:
       dockerfile: Dockerfile
     command: >
       sh -c "python manage.py migrate &&
-             python manage.py loaddata users.json &&
              python manage.py loaddata products.json &&
              gunicorn what_backend.wsgi:application --bind 0.0.0.0:8000"
 
