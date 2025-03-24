@@ -1,9 +1,10 @@
 from django.urls import path
+from knox import views as knox_views
 from .views import (
     LoginView, LogoutView, CurrentUserView,
     ProductListView, ProductSelectionView
 )
-from knox import views as knox_views
+
 
 urlpatterns = [
     path('auth/login/', LoginView.as_view(), name='knox_login'),

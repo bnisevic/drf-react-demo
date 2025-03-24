@@ -1,14 +1,12 @@
 from django.contrib.auth import login
-from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, generics, permissions
+from rest_framework import generics, permissions
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.permissions import AllowAny
-
 
 from drf_yasg.utils import swagger_auto_schema
 from knox.views import LoginView as KnoxLoginView, LogoutView as KnoxLogoutView
@@ -16,6 +14,7 @@ from knox.auth import TokenAuthentication
 
 from .models import Product
 from .serializers import ProductSerializer
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class LoginView(KnoxLoginView):
@@ -37,6 +36,7 @@ class LogoutView(KnoxLogoutView):
         request.session.flush()  # clear selected_products
         return super().post(request, *args, **kwargs)
 
+
 class CurrentUserView(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
@@ -46,6 +46,7 @@ class CurrentUserView(APIView):
             'username': request.user.username,
             'email': request.user.email,
         })
+
 
 class ProductListView(generics.ListAPIView):
     serializer_class = ProductSerializer
@@ -60,6 +61,7 @@ class ProductListView(generics.ListAPIView):
         if ordering:
             queryset = queryset.order_by(ordering)
         return queryset
+
 
 class ProductSelectionView(APIView):
     authentication_classes = [TokenAuthentication]

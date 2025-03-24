@@ -1,9 +1,9 @@
 import unittest
 
 from django.urls import reverse
+from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 from .models import Product
-from django.contrib.auth.models import User
 
 
 class SpecBackendTests(APITestCase):
