@@ -26,7 +26,7 @@ WORKDIR /app/backend
 RUN python manage.py collectstatic --noinput
 
 # Run tests
-RUN python manage.py manage.py test
+RUN python manage.py test
 
 
 ############### Stage 2: Frontend Builder #####################
